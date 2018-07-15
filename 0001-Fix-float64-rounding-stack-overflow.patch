@@ -1,0 +1,13 @@
+--- a/Source/MediaInfo/File__Analyze_Streams.cpp
++++ b/Source/MediaInfo/File__Analyze_Streams.cpp
+@@ -1676,7 +1676,9 @@ void File__Analyze::Video_FrameRate_Rounding(size_t Pos, video Parameter)
+     else if (FrameRate>29.940*2 && FrameRate<=29.985*2) FrameRate=29.970*2;
+     else if (FrameRate>29.970*2 && FrameRate<=30.030*2) FrameRate=30.000*2;
+ 
+-    if (FrameRate!=FrameRate_Sav)
++    // https://sourceforge.net/p/mediainfo/bugs/1022/
++    // https://github.com/MediaArea/MediaInfoLib/issues/913
++    if (std::fabs(FrameRate - FrameRate_Sav) > 0.01)
+         Fill(Stream_Video, Pos, Parameter, FrameRate, 3, true);
+ }
+ 

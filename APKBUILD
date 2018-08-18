@@ -14,7 +14,7 @@
 
 pkgname=libmediainfo-patched
 pkgver=18.05
-pkgrel=0
+pkgrel=1
 pkgdesc="Shared library for mediainfo"
 url="https://github.com/MediaArea/MediaInfoLib"
 arch="all"
@@ -23,15 +23,12 @@ depends_dev="zlib-dev"
 makedepends="$depends_dev cmake curl-dev libmms-dev libzen-dev tinyxml2-dev"
 subpackages="$pkgname-dev"
 conflicts="${pkgname%%-*}"
-source="https://mediaarea.net/download/source/libmediainfo/$pkgver/libmediainfo_$pkgver.tar.xz 0001-Fix-float64-rounding-stack-overflow.patch"
+source="https://mediaarea.net/download/source/libmediainfo/$pkgver/libmediainfo_$pkgver.tar.xz ad298a84a740b4e93aef0dccfda54ab440bb4f76.patch"
 builddir="$srcdir/MediaInfoLib"
 _cmakedir="$builddir/Project/CMake"
 options="!check"  # upstream does not provide tests
 
 prepare() {
-	# Fix DOS line endings for patching
-	find . \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) -exec dos2unix {} \;
-
 	default_prepare
 	cd "$builddir"
 
@@ -61,4 +58,4 @@ package() {
 }
 
 sha512sums="47d03380197f105bbd2e575558f4b4c1fade8c350af0f69a807c042abbf3aa02413fa88c047988f47cef77240e1106800a1dfd4ef1b41a1ceb019e3d52979901  libmediainfo_18.05.tar.xz
-fe3a39d3f137eb6010f64ec2b23b4b46f083e8443df4224e72c517d5616cbf168daba307efa57af8f69ca2302ffceb16d6cd4955c81875c52e8cbb41b97e7360  0001-Fix-float64-rounding-stack-overflow.patch"
+0481b9c4f817bde073f10573d8750eb27fdc73c439a88e31b6a067aeb88dc9a2fb7193583f7e89f8c48b217e0d59e1176c5cd4e062a41f79ee8ce7073d41c97e  ad298a84a740b4e93aef0dccfda54ab440bb4f76.patch"

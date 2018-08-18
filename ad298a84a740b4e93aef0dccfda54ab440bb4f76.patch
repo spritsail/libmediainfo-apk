@@ -1,0 +1,22 @@
+From ad298a84a740b4e93aef0dccfda54ab440bb4f76 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Martinez?= <jerome@mediaarea.net>
+Date: Thu, 9 Aug 2018 13:08:42 +0200
+Subject: [PATCH] x Fix of #311fa3f (fix of segfault infinite loop)
+
+---
+ Source/MediaInfo/File__Analyze_Streams.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Source/MediaInfo/File__Analyze_Streams.cpp b/Source/MediaInfo/File__Analyze_Streams.cpp
+index 63d9440ff..0773c1ad6 100644
+--- a/Source/MediaInfo/File__Analyze_Streams.cpp
++++ b/Source/MediaInfo/File__Analyze_Streams.cpp
+@@ -1684,7 +1684,7 @@ void File__Analyze::Video_FrameRate_Rounding(size_t Pos, video Parameter)
+     else if (FrameRate>29.940*2 && FrameRate<=29.985*2) FrameRate=29.970*2;
+     else if (FrameRate>29.970*2 && FrameRate<=30.030*2) FrameRate=30.000*2;
+ 
+-    if (FrameRate!=FrameRate_Sav)
++    if (std::fabs(FrameRate-FrameRate_Sav)>=0.000999999)
+         Fill(Stream_Video, Pos, Parameter, FrameRate, 3, true);
+ }
+ 
